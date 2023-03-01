@@ -9,8 +9,6 @@ import UIKit
 
 class easyGamePage: UIViewController {
 
-   
- 
     var firstNumber = 0
     var secondNumber = 0
     var difficulty = 100
@@ -54,9 +52,7 @@ class easyGamePage: UIViewController {
             if self.progressField.progress == 0.0{
                 self.time.invalidate()
                 self.navigateToScorePage()
-
-            }
-        })
+            }})
     }
     
     func generated(){
