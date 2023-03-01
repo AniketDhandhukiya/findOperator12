@@ -12,7 +12,7 @@ class scorePage: UIViewController {
     
     var score = 0
 
-    @IBOutlet weak var reset: UIButton!
+    
     var highScore = UserDefaults.standard.integer(forKey: "highScore")
     @IBOutlet weak var labelOfHighScore: UILabel!
     @IBOutlet weak var labelOfScore: UILabel!
