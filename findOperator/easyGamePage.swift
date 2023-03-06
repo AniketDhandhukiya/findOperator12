@@ -147,11 +147,8 @@ class easyGamePage: UIViewController {
         if score > highScore{
             highScore = score
            UserDefaults.standard.set(score, forKey: "highScore")
-            
         }
-            
-
-        
+   
     }
     
     func alert(score: Int, highscore: Int){
@@ -168,11 +165,5 @@ class easyGamePage: UIViewController {
     func navigateToRetry(){
         setup()
     }
-    
-   
-    
-    
-    
-    
-    
+
 }
