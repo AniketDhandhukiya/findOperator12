@@ -32,6 +32,8 @@ class ViewController: UIViewController {
                 self.progressField.progress = 0.0
                 self.navigation()
                 self.time.invalidate()
+                self.progressField.isHidden = true
+                self.loadingLabel.isHidden = true
             }
         })
     }

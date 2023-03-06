@@ -13,8 +13,9 @@ class easyGamePage: UIViewController {
     var secondNumber = 0
     var difficulty = 100
     var score = 0
-    var yourScore = "0"
-    var highScore = "0"
+    //var highScore = 0
+    var highScore = UserDefaults.standard.integer(forKey: "highScore")
+
 
     @IBOutlet weak var labelOfScore: UILabel!
     @IBOutlet weak var label1: UILabel!
@@ -28,6 +29,7 @@ class easyGamePage: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        gameOver()
     }
     
     func setup(){
@@ -41,7 +43,8 @@ class easyGamePage: UIViewController {
         labelOfOperator.text = "?"
         labelOfOperator.textColor = .red
         labelOfAnswers.textColor = .blue
-        UserDefaults.standard.set(score, forKey: "score")
+        
+        //UserDefaults.standard.set(score, forKey: "score")
     }
     
     func timeOfProgress(){
@@ -51,13 +54,14 @@ class easyGamePage: UIViewController {
             self.progressField.progress = Float(a)
             if self.progressField.progress == 0.0{
                 self.time.invalidate()
-                self.navigateToScorePage()
+                self.alert(score: self.score, highscore: self.highScore)
+                self.score = 0
             }})
     }
     
     func generated(){
-        firstNumber = Int.random(in: 30...599)
-        secondNumber = Int.random(in: 75...250)
+        firstNumber = Int.random(in: 114...854)
+        secondNumber = Int.random(in: 15...99)
         label1.text = "\(firstNumber)"
         label2.text = "\(secondNumber)"
              let plus = firstNumber + secondNumber
@@ -82,11 +86,12 @@ class easyGamePage: UIViewController {
             else
                 {
                     time.invalidate()
-                    navigateToScorePage()
+                    gameOver()
+                    alert(score: score, highscore: highScore)
+                    score = 0
                 }
-        
-        
     }
+    
     @IBAction func multiButton(_ sender: UIButton){
         if labelOfAnswers.text == "\(firstNumber * secondNumber)"{
             time.invalidate()
@@ -96,11 +101,13 @@ class easyGamePage: UIViewController {
         }
         else{
             time.invalidate()
-            navigateToScorePage()
+            gameOver()
+            alert(score: score, highscore: highScore)
+            score = 0
 
         }
-        
     }
+    
     @IBAction func divideButton(_ sender: UIButton){
         if labelOfAnswers.text == "\(firstNumber / secondNumber)"{
             time.invalidate()
@@ -110,10 +117,11 @@ class easyGamePage: UIViewController {
         }
         else{
             time.invalidate()
-            navigateToScorePage()
+            gameOver()
+            alert(score: score, highscore: highScore)
+            score = 0
 
         }
-        
     }
     @IBAction func minusButton(_ sender: UIButton){
         if labelOfAnswers.text == "\(firstNumber - secondNumber)"{
@@ -125,30 +133,43 @@ class easyGamePage: UIViewController {
         }
         else{
             time.invalidate()
-            navigateToScorePage()
+            gameOver()
+            alert(score: score, highscore: highScore)
+            score = 0
+
         }
         
     }
     
-   
-    func navigateToScorePage(){
-        let nev = storyboard?.instantiateViewController(withIdentifier: "scorePage") as! scorePage
-        nev.score = score
-        navigationController?.pushViewController(nev, animated: true)
+    
+    func gameOver(){
+
+        if score > highScore{
+            highScore = score
+           UserDefaults.standard.set(score, forKey: "highScore")
+            
+        }
+            
+
+        
     }
     
-//    func showAlertScore(){
-//        let alert = storyboard?.instantiateViewController(withIdentifier: "scorePage") as! scorePage
-//        alert.modalPresentationStyle = .currentContext
-//        alert.providesPresentationContextTransitionStyle = true
-//        alert.definesPresentationContext = true
-//        alert.modalTransitionStyle = .crossDissolve
-//        present(alert, animated: true, completion: nil)
-//    }
+    func alert(score: Int, highscore: Int){
+        let alert = UIAlertController.init(title: "GAME OVER", message: "score = \(score)\n highscore = \(highscore)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: "HOME", style: .default, handler: {i in self.navigateToHome()}))
+        alert.addAction(UIAlertAction.init(title: "Retry", style: .default, handler: {i in self.navigateToRetry()}))
+        present(alert, animated: true, completion: nil)
+    }
     
-//    func dismissed(){
-//        dismiss(animated: true, completion: nil)
-//    }
+    func navigateToHome(){
+        let nv = storyboard?.instantiateViewController(withIdentifier: "Modepage") as! Modepage
+        navigationController?.popViewController(animated: true)
+    }
+    func navigateToRetry(){
+        setup()
+    }
+    
+   
     
     
     

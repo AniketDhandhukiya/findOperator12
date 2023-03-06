@@ -31,13 +31,13 @@ class Modepage: UIViewController {
     @IBAction func mediumButton(_ sender: UIButton){
         let navigate = storyboard?.instantiateViewController(withIdentifier: "easyGamePage") as! easyGamePage
         navigate.freq = 0.03
-        
+        navigate.gameOver()
         navigationController?.pushViewController(navigate, animated: true)
     }
     @IBAction func hardButton(_ sender: UIButton){
         let navigate = storyboard?.instantiateViewController(withIdentifier: "easyGamePage") as! easyGamePage
         navigate.freq = 0.02
-        
+        navigate.gameOver()
         navigationController?.pushViewController(navigate, animated: true)
     }
     
