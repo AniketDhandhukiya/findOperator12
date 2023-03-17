@@ -8,15 +8,13 @@
 import UIKit
 
 class easyGamePage: UIViewController {
-
+    
     var firstNumber = 0
     var secondNumber = 0
     var difficulty = 100
     var score = 0
-    //var highScore = 0
     var highScore = UserDefaults.standard.integer(forKey: "highScore")
-
-
+    
     @IBOutlet weak var labelOfScore: UILabel!
     @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var label2: UILabel!
@@ -43,8 +41,6 @@ class easyGamePage: UIViewController {
         labelOfOperator.text = "?"
         labelOfOperator.textColor = .red
         labelOfAnswers.textColor = .blue
-        
-        //UserDefaults.standard.set(score, forKey: "score")
     }
     
     func timeOfProgress(){
@@ -64,32 +60,29 @@ class easyGamePage: UIViewController {
         secondNumber = Int.random(in: 15...99)
         label1.text = "\(firstNumber)"
         label2.text = "\(secondNumber)"
-             let plus = firstNumber + secondNumber
-             let minus = firstNumber - secondNumber
-             let multi = firstNumber * secondNumber
-             let divide = firstNumber / secondNumber
-             var array = [plus,multi,minus,divide]
-             var question = array.randomElement()
-             var answer = question
-             labelOfAnswers.text = "\(answer!)"
+        let plus = firstNumber + secondNumber
+        let minus = firstNumber - secondNumber
+        let multi = firstNumber * secondNumber
+        let divide = firstNumber / secondNumber
+        var array = [plus,multi,minus,divide]
+        var question = array.randomElement()
+        var answer = question
+        labelOfAnswers.text = "\(answer!)"
     }
-
+    
     @IBAction func plusButton(_ sender: UIButton){
-        
         if labelOfAnswers.text == "\(firstNumber + secondNumber)"{
             time.invalidate()
             score+=1
             labelOfScore.text = "\(score)"
             setup()
             
+        } else {
+            time.invalidate()
+            gameOver()
+            alert(score: score, highscore: highScore)
+            score = 0
         }
-            else
-                {
-                    time.invalidate()
-                    gameOver()
-                    alert(score: score, highscore: highScore)
-                    score = 0
-                }
     }
     
     @IBAction func multiButton(_ sender: UIButton){
@@ -97,14 +90,12 @@ class easyGamePage: UIViewController {
             time.invalidate()
             score+=1
             setup()
-           
-        }
-        else{
+            
+        } else {
             time.invalidate()
             gameOver()
             alert(score: score, highscore: highScore)
             score = 0
-
         }
     }
     
@@ -114,13 +105,11 @@ class easyGamePage: UIViewController {
             score+=1
             labelOfScore.text = "\(score)"
             setup()
-        }
-        else{
+        }  else {
             time.invalidate()
             gameOver()
             alert(score: score, highscore: highScore)
             score = 0
-
         }
     }
     @IBAction func minusButton(_ sender: UIButton){
@@ -130,25 +119,19 @@ class easyGamePage: UIViewController {
             labelOfScore.text = "\(score)"
             setup()
             
-        }
-        else{
+        } else {
             time.invalidate()
             gameOver()
             alert(score: score, highscore: highScore)
             score = 0
-
         }
-        
     }
     
-    
-    func gameOver(){
-
+    func gameOver() {
         if score > highScore{
             highScore = score
-           UserDefaults.standard.set(score, forKey: "highScore")
+            UserDefaults.standard.set(score, forKey: "highScore")
         }
-   
     }
     
     func alert(score: Int, highscore: Int){
@@ -158,12 +141,12 @@ class easyGamePage: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func navigateToHome(){
+    func navigateToHome() {
         let nv = storyboard?.instantiateViewController(withIdentifier: "Modepage") as! Modepage
         navigationController?.popViewController(animated: true)
     }
-    func navigateToRetry(){
+    func navigateToRetry() {
         setup()
     }
-
+    
 }
