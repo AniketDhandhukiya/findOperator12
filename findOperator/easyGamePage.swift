@@ -14,7 +14,11 @@ class easyGamePage: UIViewController {
     var difficulty = 100
     var score = 0
     var highScore = UserDefaults.standard.integer(forKey: "highScore")
+    var life = 1
     
+    @IBOutlet weak var life1: UIImageView!
+    @IBOutlet weak var life2: UIImageView!
+    @IBOutlet weak var life3: UIImageView!
     @IBOutlet weak var labelOfScore: UILabel!
     @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var label2: UILabel!
@@ -28,9 +32,13 @@ class easyGamePage: UIViewController {
         super.viewDidLoad()
         setup()
         gameOver()
+        life1.tintColor = .systemRed
+        life2.tintColor = .systemRed
+        life3.tintColor = .systemRed
     }
     
     func setup(){
+        
         labelOfScore.text = "\(score)"
         labelOfScore.layer.cornerRadius = 49
         labelOfScore.layer.masksToBounds = true
@@ -77,8 +85,28 @@ class easyGamePage: UIViewController {
             labelOfScore.text = "\(score)"
             setup()
             
-        } else {
+        }
+        else if life == 1{
+            life1.image = UIImage(systemName: "")
+            life+=1
             time.invalidate()
+            setup()
+        }
+        else if life == 2{
+            life2.image = UIImage(systemName: "")
+            life+=1
+            time.invalidate()
+            setup()
+        }
+//        else if life == 3{
+//            life3.image = UIImage(systemName: "heart")
+//            life+=3
+//            time.invalidate()
+//            setup()
+//        }
+        else {
+            time.invalidate()
+            life3.image = UIImage(systemName: "")
             gameOver()
             alert(score: score, highscore: highScore)
             score = 0
@@ -91,8 +119,27 @@ class easyGamePage: UIViewController {
             score+=1
             setup()
             
-        } else {
+        }else if life == 1{
+            life1.image = UIImage(systemName: "")
+            life+=1
             time.invalidate()
+            setup()
+        }
+        else if life == 2{
+            life2.image = UIImage(systemName: "")
+            life+=1
+            time.invalidate()
+            setup()
+        }
+//        else if life == 3{
+//            life3.image = UIImage(systemName: "heart")
+//            life+=3
+//            time.invalidate()
+//            setup()
+//        }
+        else {
+            time.invalidate()
+            life3.image = UIImage(systemName: "")
             gameOver()
             alert(score: score, highscore: highScore)
             score = 0
@@ -105,8 +152,27 @@ class easyGamePage: UIViewController {
             score+=1
             labelOfScore.text = "\(score)"
             setup()
-        }  else {
+        }else if life == 1{
+            life1.image = UIImage(systemName: "")
+            life+=1
             time.invalidate()
+            setup()
+        }
+        else if life == 2{
+            life2.image = UIImage(systemName: "")
+            life+=1
+            time.invalidate()
+            setup()
+        }
+//        else if life == 3{
+//            life3.image = UIImage(systemName: "heart")
+//            life+=3
+//            time.invalidate()
+//            setup()
+//        }
+        else {
+            time.invalidate()
+            life3.image = UIImage(systemName: "")
             gameOver()
             alert(score: score, highscore: highScore)
             score = 0
@@ -119,8 +185,27 @@ class easyGamePage: UIViewController {
             labelOfScore.text = "\(score)"
             setup()
             
-        } else {
+        }else if life == 1{
+            life1.image = UIImage(systemName: "")
+            life+=1
             time.invalidate()
+            setup()
+        }
+        else if life == 2{
+            life2.image = UIImage(systemName: "")
+            life+=1
+            time.invalidate()
+            setup()
+        }
+//        else if life == 3{
+//            life3.image = UIImage(systemName: "heart")
+//            life+=3
+//            time.invalidate()
+//            setup()
+//        }
+        else {
+            time.invalidate()
+            life3.image = UIImage(systemName: "")
             gameOver()
             alert(score: score, highscore: highScore)
             score = 0
@@ -137,7 +222,12 @@ class easyGamePage: UIViewController {
     func alert(score: Int, highscore: Int){
         let alert = UIAlertController.init(title: "GAME OVER", message: "score = \(score)\n highscore = \(highscore)", preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "HOME", style: .default, handler: {i in self.navigateToHome()}))
-        alert.addAction(UIAlertAction.init(title: "Retry", style: .default, handler: {i in self.navigateToRetry()}))
+        alert.addAction(UIAlertAction.init(title: "Retry", style: .default, handler: {i in self.navigateToRetry()
+            self.life1.image = UIImage(systemName: "heart.fill")
+            self.life2.image = UIImage(systemName: "heart.fill")
+            self.life3.image = UIImage(systemName: "heart.fill")
+            self.life = 1
+        }))
         present(alert, animated: true, completion: nil)
     }
     
@@ -147,6 +237,7 @@ class easyGamePage: UIViewController {
     }
     func navigateToRetry() {
         setup()
+        
     }
     
 }
